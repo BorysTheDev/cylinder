@@ -1,0 +1,3 @@
+[submodule "gauss"]
+	path = gauss
+	url = https://github.com/Equilibrium2702/gauss.git
