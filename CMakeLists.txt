@@ -27,6 +27,7 @@ set (HEADERS
 
 set (SOURCES
   ./main.cpp
+  ./given.cpp
   ./enter_data.cpp
 )
 

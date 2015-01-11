@@ -1,7 +1,8 @@
 #pragma once
 #include <vector>
+#include <complex>
 #include "given.h"
-
+//typedef std::complex<double> cmpx;
 
 typedef std::vector<std::vector<cmpx>> Matrix;
 

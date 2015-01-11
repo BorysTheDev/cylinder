@@ -40,7 +40,7 @@ void Enter_Data ( cmpx kappa, double ConstEps, Matrix& M)
                 double sign = (tempI + tempJ) % 2 ? -1.0 : 1;
                 M[tempI][tempJ] = (
                             ( 1.0 - sqr(uchebNodes<double>(tempJ, N)) ) / dn *
-                            ( (1.0 - (sign)/
+                            ( 1.0 - (sign)/
                                sqr(uchebNodes<double>(tempI, N) - uchebNodes<double>(tempJ,N)))*
                               (A0 / sqr(M_PI - ConstEps) ) -
                               ConstA1*(log(2.0) + 2.0 * Sum_Base_Elem(tempI, tempJ, N) +
@@ -49,10 +49,10 @@ void Enter_Data ( cmpx kappa, double ConstEps, Matrix& M)
                                                       (uchebNodes<double>(tempI,N) - uchebNodes<double>(tempJ,N))))) -
                                         2.0 / (sqr(M_PI - ConstEps) * sqr(uchebNodes<double>(tempI,N) -
                                                                 uchebNodes<double>(tempJ,N))))+
-                              ConstA1 * Log(abs((Sin(((P-ConstEps)/2.0)*
+                              ConstA1 * log(abs((sin(((M_PI-ConstEps)/2.0)*
                                                    (uchebNodes<double>(tempI,N)-uchebNodes<double>(tempJ,N))))/
-                                              (((P-ConstEps)/2.0)*(uchebNodes<double>(tempI,N)-uchebNodes<double>(tempJ,N)))))+
-                              ConstA1*log(abs(P-ConstEps))-ConstG0/2.0-
+                                              (((M_PI-ConstEps)/2.0)*(uchebNodes<double>(tempI,N)-uchebNodes<double>(tempJ,N)))))+
+                              ConstA1*log(abs(M_PI - ConstEps))-ConstG0/2.0-
                               KernelK(kappa, A0, ConstA1, ConstEps, tempJ, tempI, N));
             }
 
@@ -65,8 +65,8 @@ void Enter_Data ( cmpx kappa, double ConstEps, Matrix& M)
 cmpx Fun_Gn(cmpx kappa, int Nu)
 {
     double dn = Nu;
-    return ( (M_PI*kappa) / cmpx(0,2) ) * ( -_jn(Nu+1,Re(kappa) )+ (dn/kappa) *
-                                            _jn(Nu,Re(kappa))) * (-Hankel1(Nu+1,Re(kappa)) + (dn/kappa) * h1(Nu,Re(kappa)));
+    return ( (M_PI*kappa) / cmpx(0,2) ) * ( -_jn(Nu+1, kappa.real() )+ (dn/kappa) *
+                                            _jn(Nu, kappa.real())) * (-h1(Nu+1, kappa.real()) + (dn/kappa) * h1(Nu, kappa.real()));
 
 
 }
@@ -77,7 +77,7 @@ cmpx KernelK(cmpx kappa, cmpx ConstA0, cmpx ConstA1, double ConstEps, int K, int
     cmpx Tempsum = 0;
     for (int tempI = 1; tempI <= tempN; tempI++ )
     {
-        Tempsum += ( fun_Gn(kappa, tempI) - ConstA0 * double(tempI)
+        Tempsum += ( Fun_Gn(kappa, tempI) - ConstA0 * double(tempI)
                      - ConstA1 * (1.0 / tempI)) * cos(tempI * (M_PI - ConstEps)
                                                       * (uchebNodes<double>(J, N) - uchebNodes<double>(K, N)));
     }
